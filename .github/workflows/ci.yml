@@ -21,5 +21,13 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Run tests
-        run: pytest -v
+      - name: Run tests and create JUnit XML
+        run: |
+          mkdir -p reports
+          pytest -v --junitxml=reports/junit.xml
+
+      - name: Upload JUnit Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-report
+          path: reports/junit.xml
